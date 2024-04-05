@@ -66,13 +66,13 @@ public class Quicksort implements Sorter {
       return;
     } else {
       int mid = partition(values, order, lb, ub);
-      quicksort(values, order, mid, ub);
-      quicksort(values, order, lb, mid-1);
+      quicksort(values, order, lb, mid);
+      quicksort(values, order, mid+1, ub);
     }
   }
 
   @Override
   public <T> void sort(T[] values, Comparator<? super T> order) {
-    // STUB
+    quicksort(values, order, 0, values.length);
   } // sort(T[], Comparator<? super T>
 } // class Quicksort
