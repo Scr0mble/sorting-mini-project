@@ -37,7 +37,11 @@ public class Quicksort implements Sorter {
     values[right] = temp;
   } //swap(T[], int, int)
 
-  public <T> void partition(T[] values, Comparator<? super T> order, int lb, int ub) {
+  public <T> int partition(T[] values, Comparator<? super T> order, int lb, int ub) {
+    if((ub-lb) <= 1) {
+      return lb;
+    }
+
     swap(values, lb, (lb + (ub-lb) / 2));
 
     int small = lb+1;
@@ -52,6 +56,18 @@ public class Quicksort implements Sorter {
         swap(values, large-1, small);
         large--;
       }
+    }
+    swap(values, lb, small-1);
+    return small-1;
+  }
+
+  public <T> void quicksort(T[] values, Comparator<? super T> order, int lb, int ub) {
+    if((ub-lb) <= 1) {
+      return;
+    } else {
+      int mid = partition(values, order, lb, ub);
+      quicksort(values, order, mid, ub);
+      quicksort(values, order, lb, mid-1);
     }
   }
 
