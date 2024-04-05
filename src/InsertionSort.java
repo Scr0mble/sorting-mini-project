@@ -37,15 +37,17 @@ public class InsertionSort implements Sorter {
       for(int j = 0; j < i; j++) {
         int pos = order.compare(values[i], values[j]);
         if(pos < 0) {
-          T temp = values[j];
-          values[j] = values[i];
           for(int k = j; k < i; k++){
-            values[k+1] = values[k];
-            values[k] = temp;
-
-          }
-        }
+            swap(values, k, i);
+          }//swap for loop
+        }//if
       }//inner for loop
     }//outer for loop
-  } // sort(T[], Comparator<? super T>
+  } // sort(T[], Comparator<? super T>)
+
+  public <T> void swap(T[] values, int left, int right) {
+    T temp = values[left];
+    values[left] = values[right];
+    values[right] = temp;
+  }//swap(T[], int, int)
 } // class InsertionSort
