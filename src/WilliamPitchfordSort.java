@@ -1,5 +1,6 @@
 /**
  * @author William Pitchford
+ * @author ChatGPT
  * Purpose: Trying to implement a really fast sorting method
  */
 import java.util.ArrayList;
