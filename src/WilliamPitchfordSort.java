@@ -5,40 +5,48 @@
  */
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
-public class WilliamPitchfordSort {
+public class WilliamPitchfordSort implements Sorter {
 
-  public static <T extends Comparable<T>> void bucketSort(T[] arr) {
-    if (arr == null || arr.length == 0) {
-        return;
-    }
+    public static <T> void bucketSort(T[] array, int numBuckets, Comparator<? super T> comparator) {
+        if (array == null || array.length == 0)
+            return;
 
-    int n = arr.length;
-    @SuppressWarnings("unchecked")
-    ArrayList<T>[] buckets = new ArrayList[n];
+        // Create buckets
+        List<T>[] buckets = new List[numBuckets];
+        for (int i = 0; i < numBuckets; i++) {
+            buckets[i] = new ArrayList<>();
+        }
 
-    // Create empty buckets
-    for (int i = 0; i < n; i++) {
-        buckets[i] = new ArrayList<>();
-    }
+        // Add elements to buckets
+        for (T element : array) {
+            int bucketIndex = hash(element, numBuckets);
+            buckets[bucketIndex].add(element);
+        }
 
-    // Add elements into buckets
-    for (int i = 0; i < n; i++) {
-        int bucketIndex = (int) (n * arr[i].compareTo(arr[0]));
-        buckets[bucketIndex].add(arr[i]);
-    }
+        // Sort individual buckets
+        for (List<T> bucket : buckets) {
+            Collections.sort(bucket, comparator);
+        }
 
-    // Sort individual buckets
-    for (int i = 0; i < n; i++) {
-        Collections.sort(buckets[i]);
-    }
-
-    // Concatenate all buckets into arr[]
-    int index = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < buckets[i].size(); j++) {
-            arr[index++] = buckets[i].get(j);
+        // Merge buckets back to original array
+        int index = 0;
+        for (List<T> bucket : buckets) {
+            for (T element : bucket) {
+                array[index++] = element;
+            }
         }
     }
-}
+
+    private static <T> int hash(T element, int numBuckets) {
+        // Custom hash function, can be adjusted based on requirements
+        return Math.abs(element.hashCode()) % numBuckets;
+    }
+
+    @Override
+    public <T> void sort(T[] values, Comparator<? super T> order) {
+        bucketSort(values, 5, order);
+    } // sort(T[], Comparator<? super T>
 }
