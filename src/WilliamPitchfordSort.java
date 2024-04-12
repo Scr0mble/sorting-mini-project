@@ -10,6 +10,27 @@ import java.util.List;
 
 public class WilliamPitchfordSort implements Sorter {
 
+  // +--------+------------------------------------------------------
+  // | Fields |
+  // +--------+
+
+  /**
+   * The one sorter you can access.
+   */
+
+  // +--------------+------------------------------------------------
+  // | Constructors |
+  // +--------------+
+
+  /**
+   * Create a sorter.
+   */
+  WilliamPitchfordSort() {
+  } // WilliamPitchfordSort()
+
+  public static Sorter SORTER = new WilliamPitchfordSort();
+
+
     public static <T> void bucketSort(T[] array, int numBuckets, Comparator<? super T> comparator) {
         if (array == null || array.length == 0)
             return;
@@ -47,6 +68,6 @@ public class WilliamPitchfordSort implements Sorter {
 
     @Override
     public <T> void sort(T[] values, Comparator<? super T> order) {
-        bucketSort(values, 5, order);
+        bucketSort(values, 20, order);
     } // sort(T[], Comparator<? super T>
 }
